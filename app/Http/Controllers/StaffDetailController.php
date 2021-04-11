@@ -34,7 +34,6 @@ class StaffDetailController extends Controller
             'profile_pic' => 'required',
             'hobby' => "required|array"
         ]);
-
         $add = new StaffDetail;
         $add->name = $request->input('name');
         $add->contact_no = $request->input('contact_no');
@@ -53,7 +52,6 @@ class StaffDetailController extends Controller
             $hobby->name = $request->input('hobby')[$i];
             $hobby->save();
         }
-
         return redirect()->back()->with('message', 'Success');            
     }
 
