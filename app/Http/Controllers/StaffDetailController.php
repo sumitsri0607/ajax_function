@@ -80,17 +80,18 @@ class StaffDetailController extends Controller
                 $StaffDetail->profile_pic = time().'.'.$extension;
             }
             $StaffDetail->save(); 
+            $hobby =  hobby::where('staff_detail_id', $StaffDetail->id)->get();
+            if(!empty($hobby)){
+                foreach($hobby as $ho){
+                    $ho->delete();
+                }
+            }
             for($i=0; $i < count($request->input('hobby')); $i++){
-                // $hobby =  hobby::where('staff_detail_id', $StaffDetail->id)->first();
                     $hobby = new hobby;
                     $hobby->staff_detail_id = $StaffDetail->id;
                     $hobby->name = $request->input('hobby')[$i];
                     $hobby->save();
-                // }else{
-                //     $hobby->staff_detail_id = $StaffDetail->id;
-                //     $hobby->name = $request->input('hobby')[$i];
-                //     $hobby->save();
-                // }
+               
             }
             
             return redirect()->route('index')->with('message','updated successfully');
